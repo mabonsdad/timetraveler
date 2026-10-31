@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Historic Soundscapes Player</title>
+<link rel="stylesheet" href="style.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three.module.js" } }</script>
+</head>
+<body>
+<canvas id="view"></canvas>
+
+<div id="ui">
+  <header>
+    <div>
+      <h1 id="title">Historic Soundscapes</h1>
+      <p id="subtitle">Loading scene…</p>
+    </div>
+    <div class="row">
+      <button id="btnSound" title="Start audio (browsers need a click first)">Sound off</button>
+      <button id="btnMode" title="F">Look</button>
+      <button id="btnLayers" title="L">Layers</button>
+    </div>
+  </header>
+
+  <footer>
+    <div id="eras" class="row" role="group" aria-label="Era"></div>
+    <div class="controls">
+      <label>Photo <input id="style" type="range" min="0" max="1" step="0.01" value="0"> Illustration</label>
+      <button id="btnPaint" title="P">Paint over</button>
+      <label>Night <input id="dawn" type="range" min="0" max="1" step="0.01" value="1"> Dawn</label>
+    </div>
+    <p class="hint">Drag to look · wheel to zoom · 1–5 eras · P paint over · F flat/look · L layers · H hide UI · click a bird to pull it out</p>
+  </footer>
+
+  <aside id="layers" hidden>
+    <div class="panel-head">
+      <h2>Layers</h2>
+      <button id="btnExport" title="Download scene.json with your edits">Export scene.json</button>
+    </div>
+    <p class="small">Lifespan: years the feature exists (blank = open-ended). Hover to highlight.</p>
+    <div id="layerList"></div>
+  </aside>
+
+  <div id="card" hidden>
+    <button id="cardClose" aria-label="Close">×</button>
+    <h3 id="cardName"></h3>
+    <p id="cardSpecies" class="small"></p>
+    <dl id="cardFacts"></dl>
+  </div>
+</div>
+
+<script type="module" src="player.js"></script>
+</body>
+</html>

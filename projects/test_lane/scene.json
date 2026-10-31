@@ -1,0 +1,1423 @@
+{
+  "version": 1,
+  "title": "Test lane (synthetic)",
+  "location": {
+    "lat": null,
+    "lon": null,
+    "heading_deg": null
+  },
+  "capture_year": 2026,
+  "size": [
+    4096,
+    2048
+  ],
+  "eras": [
+    2126,
+    2026,
+    1926,
+    1826,
+    1726
+  ],
+  "era_looks": {
+    "2126": {
+      "sepia": 0.0,
+      "sat": 0.9,
+      "tint": [
+        0.95,
+        1.02,
+        1.04
+      ],
+      "label": "2126 (scenario)"
+    },
+    "2026": {
+      "sepia": 0.0,
+      "sat": 1.0,
+      "tint": [
+        1,
+        1,
+        1
+      ],
+      "label": "Today"
+    },
+    "1926": {
+      "sepia": 0.3,
+      "sat": 0.8,
+      "tint": [
+        1.03,
+        1.0,
+        0.95
+      ],
+      "label": "1926"
+    },
+    "1826": {
+      "sepia": 0.55,
+      "sat": 0.65,
+      "tint": [
+        1.05,
+        1.0,
+        0.9
+      ],
+      "label": "1826"
+    },
+    "1726": {
+      "sepia": 0.7,
+      "sat": 0.55,
+      "tint": [
+        1.06,
+        1.0,
+        0.88
+      ],
+      "label": "1726"
+    }
+  },
+  "sky": {
+    "photo": "layers/sky_photo.webp",
+    "illus": "layers/sky_illus.webp"
+  },
+  "plate": {
+    "photo": "layers/plate_filled_photo.webp",
+    "illus": "layers/plate_illus.webp",
+    "depth": "layers/plate_depth.png",
+    "filled": true
+  },
+  "layers": [
+    {
+      "id": "pole_001",
+      "kind": "object",
+      "class": "pole",
+      "bbox": [
+        2056,
+        950,
+        24,
+        102
+      ],
+      "depth_m": 69.0,
+      "photo": "layers/pole_001_photo.webp",
+      "illus": "layers/pole_001_illus.webp",
+      "lifespan": [
+        1930,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "pole_002",
+      "kind": "object",
+      "class": "pole",
+      "bbox": [
+        4060,
+        932,
+        24,
+        124
+      ],
+      "depth_m": 55.9,
+      "photo": "layers/pole_002_photo.webp",
+      "illus": "layers/pole_002_illus.webp",
+      "lifespan": [
+        1930,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "building_003",
+      "kind": "object",
+      "class": "building",
+      "bbox": [
+        1690,
+        916,
+        212,
+        148
+      ],
+      "depth_m": 40.5,
+      "photo": "layers/building_003_completed_photo.webp",
+      "illus": "layers/building_003_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": "",
+      "completed_behind": true
+    },
+    {
+      "id": "pole_004",
+      "kind": "object",
+      "class": "pole",
+      "bbox": [
+        2072,
+        898,
+        24,
+        168
+      ],
+      "depth_m": 37.9,
+      "photo": "layers/pole_004_photo.webp",
+      "illus": "layers/pole_004_illus.webp",
+      "lifespan": [
+        1930,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "building_005",
+      "kind": "object",
+      "class": "building",
+      "bbox": [
+        3766,
+        912,
+        230,
+        142
+      ],
+      "depth_m": 33.3,
+      "photo": "layers/building_005_photo.webp",
+      "illus": "layers/building_005_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "building_006",
+      "kind": "object",
+      "class": "building",
+      "bbox": [
+        654,
+        906,
+        258,
+        146
+      ],
+      "depth_m": 31.4,
+      "photo": "layers/building_006_photo.webp",
+      "illus": "layers/building_006_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "hedge_007",
+      "kind": "object",
+      "class": "hedge",
+      "bbox": [
+        1802,
+        1016,
+        230,
+        74
+      ],
+      "depth_m": 25.0,
+      "photo": "layers/hedge_007_photo.webp",
+      "illus": "layers/hedge_007_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "pole_008",
+      "kind": "object",
+      "class": "pole",
+      "bbox": [
+        4026,
+        830,
+        28,
+        256
+      ],
+      "depth_m": 23.0,
+      "photo": "layers/pole_008_photo.webp",
+      "illus": "layers/pole_008_illus.webp",
+      "lifespan": [
+        1930,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "building_009",
+      "kind": "object",
+      "class": "building",
+      "bbox": [
+        2144,
+        844,
+        344,
+        214
+      ],
+      "depth_m": 20.1,
+      "photo": "layers/building_009_completed_photo.webp",
+      "illus": "layers/building_009_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": "",
+      "completed_behind": true
+    },
+    {
+      "id": "lane_marking_010",
+      "kind": "object",
+      "class": "lane_marking",
+      "bbox": [
+        1878,
+        1102,
+        70,
+        58
+      ],
+      "depth_m": 10.8,
+      "photo": "layers/lane_marking_010_photo.webp",
+      "illus": "layers/lane_marking_010_illus.webp",
+      "lifespan": [
+        1960,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "vehicle_011",
+      "kind": "object",
+      "class": "vehicle",
+      "bbox": [
+        1928,
+        1020,
+        138,
+        118
+      ],
+      "depth_m": 11.4,
+      "photo": "layers/vehicle_011_photo.webp",
+      "illus": "layers/vehicle_011_illus.webp",
+      "lifespan": [
+        1950,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "sign_012",
+      "kind": "object",
+      "class": "sign",
+      "bbox": [
+        1580,
+        942,
+        84,
+        208
+      ],
+      "depth_m": 10.3,
+      "photo": "layers/sign_012_photo.webp",
+      "illus": "layers/sign_012_illus.webp",
+      "lifespan": [
+        1950,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "hedge_013",
+      "kind": "object",
+      "class": "hedge",
+      "bbox": [
+        26,
+        1016,
+        1752,
+        198
+      ],
+      "depth_m": 7.5,
+      "photo": "layers/hedge_013_completed_photo.webp",
+      "illus": "layers/hedge_013_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": "",
+      "completed_behind": true
+    },
+    {
+      "id": "vehicle_014",
+      "kind": "object",
+      "class": "vehicle",
+      "bbox": [
+        78,
+        1026,
+        112,
+        72
+      ],
+      "depth_m": 18.7,
+      "photo": "layers/vehicle_014_photo.webp",
+      "illus": "layers/vehicle_014_illus.webp",
+      "lifespan": [
+        1950,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "pole_015",
+      "kind": "object",
+      "class": "pole",
+      "bbox": [
+        2208,
+        524,
+        44,
+        672
+      ],
+      "depth_m": 7.4,
+      "photo": "layers/pole_015_photo.webp",
+      "illus": "layers/pole_015_illus.webp",
+      "lifespan": [
+        1930,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "lane_marking_016",
+      "kind": "object",
+      "class": "lane_marking",
+      "bbox": [
+        142,
+        1140,
+        172,
+        120
+      ],
+      "depth_m": 6.5,
+      "photo": "layers/lane_marking_016_photo.webp",
+      "illus": "layers/lane_marking_016_illus.webp",
+      "lifespan": [
+        1960,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "wall_017",
+      "kind": "object",
+      "class": "wall",
+      "bbox": [
+        2460,
+        1036,
+        94,
+        26
+      ],
+      "depth_m": 4.7,
+      "photo": "layers/wall_017_photo.webp",
+      "illus": "layers/wall_017_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "lane_marking_018",
+      "kind": "object",
+      "class": "lane_marking",
+      "bbox": [
+        1014,
+        1238,
+        758,
+        256
+      ],
+      "depth_m": 3.1,
+      "photo": "layers/lane_marking_018_photo.webp",
+      "illus": "layers/lane_marking_018_illus.webp",
+      "lifespan": [
+        1960,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    },
+    {
+      "id": "hedge_019",
+      "kind": "object",
+      "class": "hedge",
+      "bbox": [
+        2046,
+        1016,
+        2050,
+        496
+      ],
+      "depth_m": 3.0,
+      "photo": "layers/hedge_019_completed_photo.webp",
+      "illus": "layers/hedge_019_illus.webp",
+      "lifespan": [
+        null,
+        null
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": "",
+      "completed_behind": true
+    },
+    {
+      "id": "person_020",
+      "kind": "object",
+      "class": "person",
+      "bbox": [
+        2130,
+        1020,
+        74,
+        210
+      ],
+      "depth_m": 6.2,
+      "photo": "layers/person_020_photo.webp",
+      "illus": "layers/person_020_illus.webp",
+      "lifespan": [
+        9999,
+        9999
+      ],
+      "lifespan_source": "default",
+      "feature_id": null,
+      "note": ""
+    }
+  ],
+  "birds": [
+    {
+      "id": "erithacus_rubecula_2126_0",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 2126,
+      "yaw": 121.9,
+      "pitch": -3.25,
+      "depth_m": 3.0,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_2126_1",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 2126,
+      "yaw": 103.27,
+      "pitch": -3.6,
+      "depth_m": 2.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_2126_2",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 2126,
+      "yaw": -104.33,
+      "pitch": -1.67,
+      "depth_m": 6.9,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_2126_3",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 2126,
+      "yaw": -108.9,
+      "pitch": -1.49,
+      "depth_m": 7.0,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_2126_4",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 2126,
+      "yaw": -60.38,
+      "pitch": -1.49,
+      "depth_m": 7.6,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_2126_5",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 2126,
+      "yaw": 112.94,
+      "pitch": -3.43,
+      "depth_m": 2.8,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "troglodytes_troglodytes_2126_6",
+      "species": "troglodytes_troglodytes",
+      "name": "Wren",
+      "era": 2126,
+      "yaw": -26.28,
+      "pitch": -0.79,
+      "depth_m": 14.5,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "troglodytes_troglodytes_2126_7",
+      "species": "troglodytes_troglodytes",
+      "name": "Wren",
+      "era": 2126,
+      "yaw": 136.32,
+      "pitch": -2.55,
+      "depth_m": 3.4,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "troglodytes_troglodytes_2126_8",
+      "species": "troglodytes_troglodytes",
+      "name": "Wren",
+      "era": 2126,
+      "yaw": -40.52,
+      "pitch": -1.14,
+      "depth_m": 10.1,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "sylvia_atricapilla_2126_9",
+      "species": "sylvia_atricapilla",
+      "name": "Blackcap",
+      "era": 2126,
+      "yaw": 38.41,
+      "pitch": -2.37,
+      "depth_m": 3.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "sylvia_atricapilla_2126_10",
+      "species": "sylvia_atricapilla",
+      "name": "Blackcap",
+      "era": 2126,
+      "yaw": -112.94,
+      "pitch": -1.49,
+      "depth_m": 7.2,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "columba_palumbus_2126_11",
+      "species": "columba_palumbus",
+      "name": "Woodpigeon",
+      "era": 2126,
+      "yaw": 160.4,
+      "pitch": 12.74,
+      "depth_m": 43.3,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "columba_palumbus_2126_12",
+      "species": "columba_palumbus",
+      "name": "Woodpigeon",
+      "era": 2126,
+      "yaw": 155.65,
+      "pitch": 13.27,
+      "depth_m": 43.3,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_2026_13",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 2026,
+      "yaw": 114.7,
+      "pitch": -3.43,
+      "depth_m": 2.8,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_2026_14",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 2026,
+      "yaw": 148.62,
+      "pitch": -2.02,
+      "depth_m": 4.3,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_2026_15",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 2026,
+      "yaw": 36.47,
+      "pitch": -2.2,
+      "depth_m": 3.8,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_2026_16",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 2026,
+      "yaw": -14.85,
+      "pitch": 7.65,
+      "depth_m": 40.5,
+      "perch": "roof",
+      "layer": "building_003",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_2026_17",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 2026,
+      "yaw": 46.14,
+      "pitch": -2.72,
+      "depth_m": 3.3,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_2026_18",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 2026,
+      "yaw": 137.02,
+      "pitch": -2.55,
+      "depth_m": 3.4,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "troglodytes_troglodytes_2026_19",
+      "species": "troglodytes_troglodytes",
+      "name": "Wren",
+      "era": 2026,
+      "yaw": 87.28,
+      "pitch": -3.78,
+      "depth_m": 2.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "troglodytes_troglodytes_2026_20",
+      "species": "troglodytes_troglodytes",
+      "name": "Wren",
+      "era": 2026,
+      "yaw": -75.67,
+      "pitch": -1.67,
+      "depth_m": 6.9,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "fringilla_coelebs_2026_21",
+      "species": "fringilla_coelebs",
+      "name": "Chaffinch",
+      "era": 2026,
+      "yaw": 60.91,
+      "pitch": 56.51,
+      "depth_m": 2000.0,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "fringilla_coelebs_2026_22",
+      "species": "fringilla_coelebs",
+      "name": "Chaffinch",
+      "era": 2026,
+      "yaw": 154.42,
+      "pitch": 12.57,
+      "depth_m": 43.3,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "parus_major_2026_23",
+      "species": "parus_major",
+      "name": "Great tit",
+      "era": 2026,
+      "yaw": 55.28,
+      "pitch": 54.05,
+      "depth_m": 2000.0,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "parus_major_2026_24",
+      "species": "parus_major",
+      "name": "Great tit",
+      "era": 2026,
+      "yaw": 56.34,
+      "pitch": 14.5,
+      "depth_m": 55.9,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "columba_palumbus_2026_25",
+      "species": "columba_palumbus",
+      "name": "Woodpigeon",
+      "era": 2026,
+      "yaw": 169.01,
+      "pitch": 7.65,
+      "depth_m": 33.3,
+      "perch": "roof",
+      "layer": "building_005",
+      "audio": null
+    },
+    {
+      "id": "columba_palumbus_2026_26",
+      "species": "columba_palumbus",
+      "name": "Woodpigeon",
+      "era": 2026,
+      "yaw": 34.37,
+      "pitch": 12.74,
+      "depth_m": 20.1,
+      "perch": "roof",
+      "layer": "building_009",
+      "audio": null
+    },
+    {
+      "id": "columba_palumbus_2026_27",
+      "species": "columba_palumbus",
+      "name": "Woodpigeon",
+      "era": 2026,
+      "yaw": -110.48,
+      "pitch": 9.05,
+      "depth_m": 31.4,
+      "perch": "roof",
+      "layer": "building_006",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_1926_28",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 1926,
+      "yaw": -115.05,
+      "pitch": -1.49,
+      "depth_m": 7.3,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_1926_29",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 1926,
+      "yaw": 37.35,
+      "pitch": -2.37,
+      "depth_m": 3.8,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "erithacus_rubecula_1926_30",
+      "species": "erithacus_rubecula",
+      "name": "Robin",
+      "era": 1926,
+      "yaw": 13.97,
+      "pitch": -0.97,
+      "depth_m": 8.5,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_1926_31",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 1926,
+      "yaw": -24.87,
+      "pitch": -0.79,
+      "depth_m": 15.3,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "turdus_merula_1926_32",
+      "species": "turdus_merula",
+      "name": "Blackbird",
+      "era": 1926,
+      "yaw": 14.15,
+      "pitch": -0.97,
+      "depth_m": 8.4,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "turdus_philomelos_1926_33",
+      "species": "turdus_philomelos",
+      "name": "Song thrush",
+      "era": 1926,
+      "yaw": -15.21,
+      "pitch": 7.82,
+      "depth_m": 40.5,
+      "perch": "roof",
+      "layer": "building_003",
+      "audio": null
+    },
+    {
+      "id": "turdus_philomelos_1926_34",
+      "species": "turdus_philomelos",
+      "name": "Song thrush",
+      "era": 1926,
+      "yaw": 32.96,
+      "pitch": 12.92,
+      "depth_m": 20.1,
+      "perch": "roof",
+      "layer": "building_009",
+      "audio": null
+    },
+    {
+      "id": "turdus_philomelos_1926_35",
+      "species": "turdus_philomelos",
+      "name": "Song thrush",
+      "era": 1926,
+      "yaw": -101.87,
+      "pitch": 7.65,
+      "depth_m": 31.4,
+      "perch": "roof",
+      "layer": "building_006",
+      "audio": null
+    },
+    {
+      "id": "passer_domesticus_1926_36",
+      "species": "passer_domesticus",
+      "name": "House sparrow",
+      "era": 1926,
+      "yaw": 48.25,
+      "pitch": -2.72,
+      "depth_m": 3.2,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "passer_domesticus_1926_37",
+      "species": "passer_domesticus",
+      "name": "House sparrow",
+      "era": 1926,
+      "yaw": 26.28,
+      "pitch": -1.67,
+      "depth_m": 4.9,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "passer_domesticus_1926_38",
+      "species": "passer_domesticus",
+      "name": "House sparrow",
+      "era": 1926,
+      "yaw": 96.77,
+      "pitch": -3.6,
+      "depth_m": 2.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "passer_domesticus_1926_39",
+      "species": "passer_domesticus",
+      "name": "House sparrow",
+      "era": 1926,
+      "yaw": 92.37,
+      "pitch": -3.78,
+      "depth_m": 2.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1926_40",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1926,
+      "yaw": -28.56,
+      "pitch": -0.79,
+      "depth_m": 13.5,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1926_41",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1926,
+      "yaw": -7.12,
+      "pitch": -0.26,
+      "depth_m": 64.1,
+      "perch": "hedge",
+      "layer": "hedge_007",
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1926_42",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1926,
+      "yaw": 116.1,
+      "pitch": -3.43,
+      "depth_m": 2.9,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "streptopelia_turtur_1926_43",
+      "species": "streptopelia_turtur",
+      "name": "Turtle dove",
+      "era": 1926,
+      "yaw": -84.81,
+      "pitch": -1.67,
+      "depth_m": 6.7,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "streptopelia_turtur_1926_44",
+      "species": "streptopelia_turtur",
+      "name": "Turtle dove",
+      "era": 1926,
+      "yaw": 139.31,
+      "pitch": -2.55,
+      "depth_m": 3.6,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1926_45",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1926,
+      "yaw": 144.05,
+      "pitch": -49.31,
+      "depth_m": 2.4,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1926_46",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1926,
+      "yaw": 17.84,
+      "pitch": -30.85,
+      "depth_m": 3.5,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "turdus_philomelos_1826_47",
+      "species": "turdus_philomelos",
+      "name": "Song thrush",
+      "era": 1826,
+      "yaw": 162.33,
+      "pitch": 9.23,
+      "depth_m": 43.3,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "turdus_philomelos_1826_48",
+      "species": "turdus_philomelos",
+      "name": "Song thrush",
+      "era": 1826,
+      "yaw": 158.12,
+      "pitch": 13.62,
+      "depth_m": 43.3,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "turdus_philomelos_1826_49",
+      "species": "turdus_philomelos",
+      "name": "Song thrush",
+      "era": 1826,
+      "yaw": 55.11,
+      "pitch": 16.08,
+      "depth_m": 55.9,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1826_50",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1826,
+      "yaw": 91.85,
+      "pitch": -3.78,
+      "depth_m": 2.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1826_51",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1826,
+      "yaw": -84.81,
+      "pitch": -1.67,
+      "depth_m": 6.7,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1826_52",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1826,
+      "yaw": 53.35,
+      "pitch": -3.08,
+      "depth_m": 3.1,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "emberiza_citrinella_1826_53",
+      "species": "emberiza_citrinella",
+      "name": "Yellowhammer",
+      "era": 1826,
+      "yaw": -148.62,
+      "pitch": -0.97,
+      "depth_m": 12.4,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1826_54",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1826,
+      "yaw": -136.85,
+      "pitch": -12.39,
+      "depth_m": 8.4,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1826_55",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1826,
+      "yaw": 154.6,
+      "pitch": -37.53,
+      "depth_m": 3.0,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1826_56",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1826,
+      "yaw": 34.37,
+      "pitch": -31.38,
+      "depth_m": 3.5,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "perdix_perdix_1826_57",
+      "species": "perdix_perdix",
+      "name": "Grey partridge",
+      "era": 1826,
+      "yaw": 92.55,
+      "pitch": -60.56,
+      "depth_m": 2.1,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "perdix_perdix_1826_58",
+      "species": "perdix_perdix",
+      "name": "Grey partridge",
+      "era": 1826,
+      "yaw": 110.13,
+      "pitch": -51.94,
+      "depth_m": 2.3,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "luscinia_megarhynchos_1826_59",
+      "species": "luscinia_megarhynchos",
+      "name": "Nightingale",
+      "era": 1826,
+      "yaw": -111.53,
+      "pitch": -1.49,
+      "depth_m": 7.1,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "luscinia_megarhynchos_1826_60",
+      "species": "luscinia_megarhynchos",
+      "name": "Nightingale",
+      "era": 1826,
+      "yaw": 129.46,
+      "pitch": -2.9,
+      "depth_m": 3.2,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "emberiza_calandra_1826_61",
+      "species": "emberiza_calandra",
+      "name": "Corn bunting",
+      "era": 1826,
+      "yaw": -69.52,
+      "pitch": -1.49,
+      "depth_m": 7.1,
+      "perch": "hedge",
+      "layer": "hedge_013",
+      "audio": null
+    },
+    {
+      "id": "emberiza_calandra_1826_62",
+      "species": "emberiza_calandra",
+      "name": "Corn bunting",
+      "era": 1826,
+      "yaw": 47.55,
+      "pitch": -43.86,
+      "depth_m": 2.6,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "cuculus_canorus_1826_63",
+      "species": "cuculus_canorus",
+      "name": "Cuckoo",
+      "era": 1826,
+      "yaw": 44.56,
+      "pitch": 12.39,
+      "depth_m": 55.9,
+      "perch": "canopy",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1726_64",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1726,
+      "yaw": 102.74,
+      "pitch": -53.35,
+      "depth_m": 2.2,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1726_65",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1726,
+      "yaw": 142.47,
+      "pitch": -41.22,
+      "depth_m": 2.7,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1726_66",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1726,
+      "yaw": 142.47,
+      "pitch": -32.43,
+      "depth_m": 3.4,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "alauda_arvensis_1726_67",
+      "species": "alauda_arvensis",
+      "name": "Skylark",
+      "era": 1726,
+      "yaw": 129.81,
+      "pitch": -47.9,
+      "depth_m": 2.4,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "crex_crex_1726_68",
+      "species": "crex_crex",
+      "name": "Corncrake",
+      "era": 1726,
+      "yaw": 42.45,
+      "pitch": -52.47,
+      "depth_m": 2.3,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "crex_crex_1726_69",
+      "species": "crex_crex",
+      "name": "Corncrake",
+      "era": 1726,
+      "yaw": 137.55,
+      "pitch": -50.19,
+      "depth_m": 2.3,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "emberiza_calandra_1726_70",
+      "species": "emberiza_calandra",
+      "name": "Corn bunting",
+      "era": 1726,
+      "yaw": -39.99,
+      "pitch": -11.69,
+      "depth_m": 8.9,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "emberiza_calandra_1726_71",
+      "species": "emberiza_calandra",
+      "name": "Corn bunting",
+      "era": 1726,
+      "yaw": 91.49,
+      "pitch": -51.24,
+      "depth_m": 2.3,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "emberiza_calandra_1726_72",
+      "species": "emberiza_calandra",
+      "name": "Corn bunting",
+      "era": 1726,
+      "yaw": 70.75,
+      "pitch": -53.53,
+      "depth_m": 2.2,
+      "perch": "ground",
+      "layer": null,
+      "audio": null
+    },
+    {
+      "id": "luscinia_megarhynchos_1726_73",
+      "species": "luscinia_megarhynchos",
+      "name": "Nightingale",
+      "era": 1726,
+      "yaw": 84.29,
+      "pitch": -3.6,
+      "depth_m": 2.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "luscinia_megarhynchos_1726_74",
+      "species": "luscinia_megarhynchos",
+      "name": "Nightingale",
+      "era": 1726,
+      "yaw": 48.25,
+      "pitch": -2.72,
+      "depth_m": 3.2,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    },
+    {
+      "id": "lanius_collurio_1726_75",
+      "species": "lanius_collurio",
+      "name": "Red-backed shrike",
+      "era": 1726,
+      "yaw": 142.47,
+      "pitch": -2.37,
+      "depth_m": 3.7,
+      "perch": "hedge",
+      "layer": "hedge_019",
+      "audio": null
+    }
+  ]
+}

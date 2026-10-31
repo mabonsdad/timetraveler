@@ -1,0 +1,44 @@
+{
+  "title": "Test lane (synthetic)",
+  "source": "pano.jpg",
+  "source_size": [
+    4096,
+    2048
+  ],
+  "location": {
+    "lat": null,
+    "lon": null,
+    "heading_deg": null
+  },
+  "capture_year": 2026,
+  "settings": {
+    "camera_height_m": 1.8,
+    "work_width": 2048,
+    "out_width": 4096
+  },
+  "steps": {
+    "segment": {
+      "backend": "manual",
+      "labels": "../samples/test_labels.png"
+    },
+    "depth": {
+      "backend": "ground-plane"
+    },
+    "layers": {
+      "count": 20
+    },
+    "fill": {
+      "backend": "opencv"
+    },
+    "stylise": {
+      "backend": "opencv"
+    },
+    "perches": {
+      "count": 1039
+    },
+    "birds": {
+      "count": 76,
+      "csv": "../samples/birds_example.csv"
+    }
+  }
+}
