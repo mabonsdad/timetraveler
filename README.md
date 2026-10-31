@@ -63,11 +63,11 @@ python -m hsvis all ../projects/test_lane --seg manual --labels ../samples/test_
 
 | Step | What it does | Backends |
 |---|---|---|
-| `segment` | Class per pixel (sky, vegetation, hedge, terrain, water, road, path, lane_marking, building, wall, vehicle, person, pole, sign, far, other). See `hsvis/classes.py`. | `heuristic` (no models, crude), `manual` (hand-painted label PNG), `mask2former` (GPU) |
-| `depth` | Approximate metres per pixel. Ground distance from camera height and angle below the horizon; upright things take the distance where their base meets the ground, column by column. | `ground-plane`, `depth-anything` (GPU, aligned to the ground-plane prior) |
+| `segment` | Class per pixel (sky, vegetation, hedge, terrain, water, road, path, lane_marking, building, wall, vehicle, person, pole, sign, far, other). See `hsvis/classes.py`. | `heuristic` (no models, crude), `manual` (hand-painted label PNG), `mask2former` (GPU), `sam3`, `gemini` (hosted) |
+| `depth` | Approximate metres per pixel. Ground distance from camera height and angle below the horizon; upright things take the distance where their base meets the ground, column by column. | `ground-plane`, `depth-anything` (GPU), `fal` (hosted); both aligned to the ground-plane prior |
 | `layers` | Cuts the panorama into sky, plate and object layers. Pieces of one house split by a pole are joined. Layers are ordered by which is in front where they touch. Edges are decontaminated. Writes `scene.json`. | — |
-| `fill` | Inpaints the plate behind every object (in perspective tiles, filling each background class from its own kind) and completes objects behind nearer ones (a house behind a car). Holes backed by sky become transparent. | `opencv` (placeholder quality), `sdxl` (GPU) |
-| `stylise` | Illustrated version of every layer, using one shared palette and paper texture so layers match. | `opencv` (placeholder look), `sdxl` + style LoRA (GPU) |
+| `fill` | Inpaints the plate behind every object (in perspective tiles, filling each background class from its own kind) and completes objects behind nearer ones (a house behind a car). Holes backed by sky become transparent. | `opencv` (placeholder quality), `sdxl` (GPU), `fal-flux`, `gemini`, `fal-edit` (hosted) |
+| `stylise` | Illustrated version of every layer, using one shared palette and paper texture so layers match. | `opencv` (placeholder look), `sdxl` + style LoRA (GPU), `fal-flux`, `gemini`, `fal-edit` (hosted) |
 | `perches` | Candidate bird positions: tree crowns, hedge tops, roof ridges, walls, wires, near ground, water. | — |
 | `birds` | Places birds from the soundscape CSV onto perches valid in that era. | — |
 | `render` / `sheet` | Offline composites: a full equirect for an LED playback server, a perspective view, or a contact sheet of all eras. | — |
@@ -77,6 +77,52 @@ using the class colours, leave unpainted areas transparent, and run
 `segment --backend mask2former --labels corrections.png`. Painted pixels override the model.
 You can edit lifespans in the player's **Layers** panel and export `scene.json`. Re-running
 `layers` keeps lifespans, feature IDs and notes for layers whose ID and class still match.
+
+### Hosted AI backends (fal.ai and Google AI Studio)
+
+These need API keys (see **[SECRETS.md](SECRETS.md)**) but no GPU. Every step runs on
+perspective views or crops (never on the raw equirect), caches responses in `work/ai_cache/`,
+supports `--dry-run` cost estimates, and stops at a per-command budget (`HSVIS_AI_BUDGET`, default $5).
+
+| Step | Backend | Model | What it adds | Est. per 8K panorama* |
+|---|---|---|---|---|
+| `ai-check` | — | — | Checks keys and which configured models your key can use | free |
+| `segment` | `sam3` | SAM 3 on fal | Text-prompted masks per class: the strongest segmentation option | ~$1.35 (270 calls) |
+| | `gemini` | Gemini 2.5 Flash | Masks for all classes in one call per view: cheap, coarser | ~$0.05 |
+| `depth` | `fal` | Depth Anything V2 on fal | Real depth for trees, walls and buildings, aligned to the ground-plane metres | ~$0.04 |
+| `fill` | `fal-flux` | FLUX.1 Fill [pro] | Proper inpainting behind removed objects, prompted by what's around the hole | ~$1.25 |
+| | `gemini` / `fal-edit` | Nano Banana | The same by instruction: the hole is painted magenta and replaced | ~$1.75 |
+| `train-style` | — | FLUX LoRA training on fal | Learns the illustrator's style from 10–20 key frames, once per style | ~$2 |
+| `stylise` | `fal-flux` | FLUX img2img + LoRA | The house illustration style, geometry kept (`--strength`) | ~$1.50 |
+| | `gemini` / `fal-edit` | Nano Banana | Restyle to match reference frames (`--style-refs`), no training | ~$3 |
+| `describe` | — | Gemini Flash | Looks at each building, wall or hedge and estimates when it appeared; `--apply` sets lifespans still on class defaults (`lifespan_source: ai-estimate`) | ~$0.03 |
+
+\*Estimates from the test scene at the default settings and the list prices in `hsvis/ai/config.py`.
+Run with `--dry-run` for your own panorama.
+
+A typical run:
+
+```bash
+python -m hsvis ai-check
+python -m hsvis segment ../projects/mysite --backend sam3 --dry-run
+python -m hsvis segment ../projects/mysite --backend sam3
+python -m hsvis depth   ../projects/mysite --backend fal
+python -m hsvis layers  ../projects/mysite
+python -m hsvis fill    ../projects/mysite --backend fal-flux
+python -m hsvis train-style ../projects/mysite --frames ../style/keyframes
+python -m hsvis stylise ../projects/mysite --backend fal-flux
+python -m hsvis describe ../projects/mysite --apply
+python -m hsvis perches ../projects/mysite && python -m hsvis birds ../projects/mysite --csv birds.csv
+```
+
+**How the restyle stays consistent:** the whole capture is restyled once, as feathered
+overlapping tiles, and every layer is cut from that one illustration. Only what the capture never
+showed (filled plate areas, the hidden parts of completed objects) is restyled separately. With
+Nano Banana and no reference frames, the first restyled tile becomes the reference for the rest.
+
+**Testing without keys:** `python -m unittest tests.test_ai_backends -v` runs every hosted
+backend through the real CLI against a local mock of both services (`tests/mock_services.py`).
+That proves the plumbing, not the quality of the models' output.
 
 **GPU backends** (`hsvis/ml.py`, `pip install -r requirements-ml.txt`) were written without GPU
 or model-hub access and **have not been run yet**, so expect a round of fixes on first use.
@@ -155,8 +201,10 @@ Unreal as sphere sections in this draw order. The layer format is engine-agnosti
 ## Known limitations and next steps
 
 - **OpenCV fill and stylise are placeholders.** They prove the data flow and the layer
-  maths. The production look comes from the SDXL backends with a LoRA trained on commissioned
-  illustration key frames.
+  maths. The production look comes from the hosted backends (or SDXL on a local GPU) with a style
+  trained on commissioned illustration key frames.
+- **Hosted backends are tested against a mock only.** Request and response field names follow
+  fal's and Google's published schemas as of October 2026; expect small fixes on the first real run.
 - **Road narrowing and surface change by era** are not automated yet. Planned approach: use the
   ground-plane coordinates of road pixels to derive the lane's centreline and width, then generate
   a verge "addition" layer per era from the research data's width and surface.

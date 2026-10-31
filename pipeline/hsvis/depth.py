@@ -11,6 +11,7 @@ Backends:
                 the point where they meet the ground. Surprisingly good for lanes/fields.
   depth-anything  Depth Anything V2 per perspective view, each view aligned to the
                 ground-plane prior so the views agree in scale (GPU machine; see ml.py).
+  fal           the same model hosted on fal.ai (needs FAL_KEY).
 """
 import cv2
 import numpy as np
@@ -24,7 +25,10 @@ FAR_DEPTH = 2000.0
 MAX_GROUND = 1500.0
 
 
-def depth(project, backend="ground-plane", **kw):
+def depth(project, backend="ground-plane", dry_run=False, **kw):
+    if backend == "fal" and not dry_run:
+        from .ai import config
+        config.fal_key()
     labels = load_labels(project)
     h = project.meta["settings"]["camera_height_m"]
     prior = ground_plane(labels, h)
@@ -35,6 +39,15 @@ def depth(project, backend="ground-plane", **kw):
         W, H = project.work_size
         d = depth_anything(project.load_source((W, H)), labels, prior, **kw)
         d[labels == ID["sky"]] = SKY_DEPTH
+    elif backend == "fal":
+        from .ai import backends as ai
+        W, H = project.work_size
+        session = ai.session_for(project, dry_run, backend)
+        d = ai.depth_fal(project.load_source((W, H)), labels, prior, session, **kw)
+        d[labels == ID["sky"]] = SKY_DEPTH
+        print(f"  {session.summary()}")
+        if dry_run:
+            return None
     else:
         raise SystemExit(f"unknown depth backend {backend}")
     np.save(project.p("work", "depth.npy"), d.astype(np.float32))

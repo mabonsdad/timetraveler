@@ -12,7 +12,8 @@ What sits behind a hole (sky or ground) is decided by propagating the nearest su
 holes that turn out to be sky become transparent in the plate (the sky layer shows through), which
 also means poles/trees against the sky need no inpainting at all.
 
-Backends: opencv (Telea, runs anywhere, smeary on big holes) and sdxl (diffusion, GPU; see ml.py).
+Backends: opencv (Telea, runs anywhere, smeary on big holes), sdxl (diffusion, GPU; see ml.py),
+and hosted: fal-flux (FLUX.1 Fill on fal.ai), gemini / fal-edit (Nano Banana; see ai/backends.py).
 """
 import math
 
@@ -68,12 +69,19 @@ class OpenCVInpainter:
         return np.where(m, res, rgb)
 
 
-def get_inpainter(backend, **kw):
+AI_BACKENDS = ("fal-flux", "gemini", "fal-edit")
+
+
+def get_inpainter(backend, project=None, dry_run=False, **kw):
+    """Returns (inpainter, ai_session or None)."""
     if backend == "opencv":
-        return OpenCVInpainter()
+        return OpenCVInpainter(), None
     if backend == "sdxl":
         from .ml import SDXLInpainter
-        return SDXLInpainter(**kw)
+        return SDXLInpainter(**kw), None
+    if backend in AI_BACKENDS:
+        from .ai.backends import get_inpainter as ai_inpainter
+        return ai_inpainter(backend, project, dry_run)
     raise SystemExit(f"unknown fill backend {backend}")
 
 
@@ -85,14 +93,16 @@ BG_PROMPT = {
 }
 
 
-def fill(project, backend="opencv", tile=1536, **kw):
+def fill(project, backend="opencv", tile=1536, dry_run=False, **kw):
     scene = project.load_scene()
     Wo, Ho = project.out_size
     labels = load_labels(project)
     Hw, Ww = labels.shape
     inst = np.load(project.p("work", "instances.npy"))
     holes_full = cv2.imread(project.p("work", "holes.png"), cv2.IMREAD_GRAYSCALE) > 0
-    painter = get_inpainter(backend, **kw)
+    painter, session = get_inpainter(backend, project, dry_run, **kw)
+    if backend in AI_BACKENDS:
+        tile = min(tile, 1024)  # hosted models work at ~1 MP; more tiles beats upscaled ones
 
     # ---- what's behind the holes: nearest surrounding class -----------------
     holes_w = cv2.resize(holes_full.astype(np.uint8), (Ww, Hw), interpolation=cv2.INTER_AREA) > 0
@@ -140,20 +150,24 @@ def fill(project, backend="opencv", tile=1536, **kw):
     plate_alpha = np.clip(1 - sky_bg, 0, 1)
     plate_alpha[holes_full & (sky_bg >= 0.5)] = 0
     plate_alpha = (plate_alpha * 255).astype(np.uint8)
-    write_rgb(project.p("layers", "plate_filled_photo.webp"), np.dstack([plate, plate_alpha]))
-    scene["plate"]["photo"] = "layers/plate_filled_photo.webp"
-    scene["plate"]["filled"] = True
+    if not dry_run:
+        write_rgb(project.p("layers", "plate_filled_photo.webp"), np.dstack([plate, plate_alpha]))
+        scene["plate"]["photo"] = "layers/plate_filled_photo.webp"
+        scene["plate"]["filled"] = True
+        # background depth (objects removed) for the player's depth effects
+        from .depth import ground_plane
+        write_depth_png(project, ground_plane(bg, project.meta["settings"]["camera_height_m"]))
 
-    # background depth (objects removed) for the player's depth effects
-    from .depth import ground_plane
-    write_depth_png(project, ground_plane(bg, project.meta["settings"]["camera_height_m"]))
-
-    complete_objects(project, scene, inst, painter)
+    complete_objects(project, scene, inst, painter, write=not dry_run)
+    if session:
+        print(f"  {session.summary()}")
+    if dry_run:
+        return  # nothing written: a dry run only counts calls
     project.save_scene(scene)
     project.mark("fill", backend=backend)
 
 
-def complete_objects(project, scene, inst, painter):
+def complete_objects(project, scene, inst, painter, write=True):
     """Extend each object layer behind nearer objects that overlap it."""
     Wo, _ = project.out_size
     Ww = inst.shape[1]
@@ -181,13 +195,21 @@ def complete_objects(project, scene, inst, painter):
         occ_o = cv2.resize(occ.astype(np.uint8), (bo[2], bo[3]), interpolation=cv2.INTER_NEAREST)
         occ_o = cv2.dilate(occ_o, np.ones((5, 5), np.uint8)) > 0
         a = rgba[..., 3]
-        # source pixels = the object itself only: mask out everything else too
-        mask = (occ_o | (a < 128)).astype(np.uint8) * 255
-        filled = painter.inpaint(rgba[..., :3], mask, f"{layer['class']}")
+        if getattr(painter, "generative", False):
+            # generative models use the surrounding context; only the hidden part is filled
+            mask = occ_o.astype(np.uint8) * 255
+            prompt = f"the hidden part of the {layer['class'].replace('_', ' ')}, continuing its shape and materials"
+        else:
+            # source pixels = the object itself only: mask out everything else too
+            mask = (occ_o | (a < 128)).astype(np.uint8) * 255
+            prompt = layer["class"]
+        filled = painter.inpaint(rgba[..., :3], mask, prompt)
         rgba[..., :3] = np.where(occ_o[..., None], filled, rgba[..., :3])
         soft = (cv2.GaussianBlur(occ_o.astype(np.float32), (0, 0), 1.0) * 255).astype(np.uint8)
         rgba[..., 3] = np.maximum(a, soft)
         path = layer["photo"].replace("_photo.webp", "_completed_photo.webp")
+        if not write:
+            continue
         write_rgb(project.p(path), rgba)
         layer["photo"] = path
         layer["completed_behind"] = True

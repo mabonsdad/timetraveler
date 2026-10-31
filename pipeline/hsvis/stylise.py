@@ -8,7 +8,9 @@ Backends:
   opencv  edge-preserving wash + shared palette + ink lines + paper grain. A placeholder look,
           good enough to design transitions and test on the wall.
   sdxl    diffusion img2img with a style LoRA trained on the commissioned illustrator's key frames,
-          on perspective tiles (GPU machine; see ml.py). This is the intended production route.
+          on perspective tiles (GPU machine; see ml.py).
+  fal-flux / gemini / fal-edit   the same idea on hosted models (see ai/backends.py and
+          stylise_tiled below): FLUX + LoRA on fal.ai, or Nano Banana with reference key frames.
 """
 import cv2
 import numpy as np
@@ -76,7 +78,12 @@ def paper_texture(size, seed):
     return 0.93 + 0.1 * acc
 
 
-def stylise(project, backend="opencv", **kw):
+AI_BACKENDS = ("fal-flux", "gemini", "fal-edit")
+
+
+def stylise(project, backend="opencv", dry_run=False, **kw):
+    if backend in AI_BACKENDS:
+        return stylise_tiled(project, backend, dry_run, **kw)
     scene = project.load_scene()
     size = project.out_size
     if backend == "opencv":
@@ -103,5 +110,61 @@ def stylise(project, backend="opencv", **kw):
         write_rgb(project.p(path), rgba)
         layer["illus"] = path
 
+    project.save_scene(scene)
+    project.mark("stylise", backend=backend)
+
+
+def stylise_tiled(project, backend, dry_run=False, **kw):
+    """Hosted generative restyle. The capture is restyled once and every layer is cut from that one
+    illustration, so layers match exactly. Only areas the capture doesn't show (filled plate, the
+    hidden parts of completed objects) are restyled separately."""
+    from .ai.backends import get_styliser
+    from .classes import ID
+    from .layers import extend_sky
+    from .segment import load_labels
+
+    scene = project.load_scene()
+    style, session = get_styliser(backend, project, dry_run, **kw)
+    W, H = project.out_size
+    src = project.load_source((W, H))
+    illus = style(src)
+
+    # exact masks from earlier steps (comparing pixels would trip on lossy WebP noise)
+    holes = cv2.imread(project.p("work", "holes.png"), cv2.IMREAD_GRAYSCALE) > 0
+    labels = cv2.resize(load_labels(project), (W, H), interpolation=cv2.INTER_NEAREST)
+    plate = read_rgba(project.p(scene["plate"]["photo"]))
+    filled = holes & (plate[..., 3] > 0)
+    plate_il = illus
+    if filled.any():
+        extra = style(plate[..., :3], only=cv2.dilate(filled.astype(np.uint8), np.ones((31, 31), np.uint8)) > 0)
+        a = cv2.GaussianBlur(filled.astype(np.float32), (0, 0), 3)[..., None]
+        plate_il = (extra * a + illus * (1 - a)).astype(np.uint8)
+
+    # sky: real sky from the illustration, extended behind everything else
+    sky_il = extend_sky(illus, (labels == ID["sky"]).astype(np.float32))
+
+    layer_out = []
+    for layer in scene["layers"]:
+        rgba = read_rgba(project.p(layer["photo"]))
+        il = crop_wrap(illus, layer["bbox"]).copy()
+        if layer.get("completed_behind"):
+            before = read_rgba(project.p(layer["photo"].replace("_completed_photo", "_photo")))[..., 3]
+            hidden = rgba[..., 3].astype(np.int16) > before.astype(np.int16) + 64
+            if hidden.any():
+                a = cv2.GaussianBlur(hidden.astype(np.float32), (0, 0), 2)[..., None]
+                il = (style.single(rgba[..., :3]) * a + il * (1 - a)).astype(np.uint8)
+        layer_out.append((layer, np.dstack([il, rgba[..., 3]])))
+
+    print(f"  {session.summary()}")
+    if dry_run:
+        return
+    write_rgb(project.p("layers", "sky_illus.webp"), sky_il)
+    scene["sky"]["illus"] = "layers/sky_illus.webp"
+    write_rgb(project.p("layers", "plate_illus.webp"), np.dstack([plate_il, plate[..., 3]]))
+    scene["plate"]["illus"] = "layers/plate_illus.webp"
+    for layer, rgba in layer_out:
+        path = f"layers/{layer['id']}_illus.webp"
+        write_rgb(project.p(path), rgba)
+        layer["illus"] = path
     project.save_scene(scene)
     project.mark("stylise", backend=backend)

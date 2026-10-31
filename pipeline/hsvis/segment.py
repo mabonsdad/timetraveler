@@ -7,6 +7,8 @@ Backends:
   heuristic  sky / ground / vegetation from colour and position. Crude, needs no models.
   mask2former  Mask2Former trained on Mapillary Vistas, run on overlapping perspective views (GPU
              machine; see ml.py).
+  sam3       SAM 3 on fal.ai, text-prompted per class (needs FAL_KEY; see ai/backends.py).
+  gemini     Gemini 2.5 Flash segmentation masks (needs GEMINI_API_KEY).
 """
 import cv2
 import numpy as np
@@ -16,7 +18,7 @@ from .classes import CLASSES, ID, NAMES
 from .projection import lonlat_grid
 
 
-def segment(project, backend="heuristic", labels_path=None, **kw):
+def segment(project, backend="heuristic", labels_path=None, dry_run=False, **kw):
     W, H = project.work_size
     rgb = project.load_source((W, H))
     if backend == "manual" and labels_path is None:
@@ -29,6 +31,14 @@ def segment(project, backend="heuristic", labels_path=None, **kw):
     elif backend == "mask2former":
         from .ml import mask2former_segment
         labels = mask2former_segment(rgb, **kw)
+    elif backend in ("sam3", "gemini"):
+        from .ai import backends as ai
+        session = ai.session_for(project, dry_run, backend)
+        fn = ai.segment_sam3 if backend == "sam3" else ai.segment_gemini
+        labels = fn(rgb, heuristic(rgb), session, **kw)  # the heuristic fills anything no model claimed
+        print(f"  {session.summary()}")
+        if dry_run:
+            return None
     else:
         raise SystemExit(f"unknown segmentation backend {backend}")
 

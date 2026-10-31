@@ -15,35 +15,13 @@ import numpy as np
 from PIL import Image
 
 from .classes import GROUND, ID, map_vistas
-from .projection import (equirect_to_perspective, lonlat_grid, lonlat_to_dir, overlap_views,
-                         perspective_to_equirect, rotation)
-
-VIEW_FOV = np.radians(110)
+from .projection import equirect_to_perspective, overlap_views, perspective_to_equirect
+from .views import VIEW_FOV, align_disparity, centrality as _centrality, merge_views as _merge_views
 
 
 def _device():
     import torch
     return "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
-
-
-def _centrality(W, H, yaw, pitch):
-    lon, lat = lonlat_grid(W, H)
-    fwd = rotation(yaw, pitch) @ np.array([0, 0, 1.0])
-    return lonlat_to_dir(lon, lat) @ fwd
-
-
-def _merge_views(W, H, run_view, size, dtype, interp):
-    """run_view(yaw, pitch) -> perspective result; keep each pixel from its most central view."""
-    best = np.full((H, W), -2.0, np.float32)
-    out = np.zeros((H, W), dtype)
-    for yaw, pitch in overlap_views():
-        res = run_view(yaw, pitch)
-        vals, valid = perspective_to_equirect(res, yaw, pitch, VIEW_FOV, W, H, interp=interp)
-        c = _centrality(W, H, yaw, pitch)
-        take = valid & (c > best)
-        out[take] = vals[take]
-        best[take] = c[take]
-    return out
 
 
 # ---- segmentation -----------------------------------------------------------
@@ -86,14 +64,10 @@ def depth_anything(rgb, labels, prior, model="depth-anything/Depth-Anything-V2-S
                                                size=(size, size), mode="bilinear")[0, 0].cpu().numpy()
         pv = equirect_to_perspective(prior.astype(np.float32), yaw, pitch, VIEW_FOV, size, cv2.INTER_NEAREST)
         gv = equirect_to_perspective(ground.astype(np.uint8), yaw, pitch, VIEW_FOV, size, cv2.INTER_NEAREST) > 0
-        if gv.sum() > 500:  # 1/depth ~ a * disparity + b on ground pixels
-            A = np.stack([disp[gv], np.ones(gv.sum())], 1)
-            a, b = np.linalg.lstsq(A, 1 / pv[gv], rcond=None)[0]
-        else:  # view sees no ground (looking up): fall back to a global-ish scale
-            a, b = 1 / max(np.percentile(disp, 95), 1e-3) / 5, 0
-        return (1 / np.maximum(a * disp + b, 1e-4)).astype(np.float32)
+        return align_disparity(disp, pv, gv)  # None (no ground in view) -> keep the prior there
 
-    return np.minimum(_merge_views(W, H, run, size, np.float32, cv2.INTER_LINEAR), 2000)
+    d = _merge_views(W, H, run, size, np.float32, cv2.INTER_LINEAR, init=0)
+    return np.minimum(np.where(d > 0, d, prior), 2000)
 
 
 # ---- diffusion ---------------------------------------------------------------
